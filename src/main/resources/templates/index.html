@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/jquery.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<a href="link.html">管理标签列表</a>
+<div style="text-align: center;margin-top: 100px" class="form-control">
+    <input id="longUrl" style="height: 30px;width: 400px" placeholder="请输入长连接"><br/>
+    <button onclick="btn()" style="width: 100px;height: 30px;margin-top: 20px">确定</button>
+    <p id="shortUrl"></p>
+</div>
+
+</body>
+<script type="text/javascript">
+    function btn(){
+        $.post("getShortUrl",{longUrl:$("#longUrl").val()},function (result) {
+            if (result.indexOf("/") == -1){
+                alert(result);
+                $("#longUrl").val("");
+                return;
+            }
+            $("#shortUrl").html("短链接："+ result);
+        })
+    }
+</script>
+</html>

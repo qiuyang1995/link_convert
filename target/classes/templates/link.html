@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/jquery.min.js"></script>
+    <title>Title</title>
+</head>
+<style>
+    td{
+        text-align: center;
+    }
+</style>
+<body>
+<div style="text-align: center;font-size: 40px">
+    链接管理
+</div>
+<div>
+    <table style="word-break:break-all; word-wrap:break-all;" border="1px" cellspacing="0" cellpadding="10" align="center">
+    </table>
+</div>
+</body>
+<script type="text/javascript">
+   $(function () {
+       $.post("list",function (rs) {
+           console.log(rs)
+           var stu = rs[0];
+           //动态获取字段
+           var arr = new Array();
+           arr.push("<thead>");
+           arr.push("<tr>")
+           arr.push("<td>id</td>>")
+           for(var j in stu){
+               if( j != "id"){
+                   arr.push("<td>" + j + "</td>>");
+               }
+           }
+           arr.push("<td colspan='3'><a href=''  >操作</a></td>")
+           // arr.push("<td><a href=''>修改</a></td>")
+           // arr.push("<td><a href=''>删除</a></td>")
+           arr.push("</tr>");
+           arr.push("</thead>")
+           $("table").append(arr);
+           var tbody = $("<tbody></tbody>");
+           $("table").append(tbody);
+           // 获取后端发来的数据并添加到表格
+           for(var i = 0;i < rs.length;i++){
+               var arr = new Array();
+               arr.push("<tr>");
+               arr.push("<td >" + rs[i].id + "</td>");
+               for(var j in stu){
+                   if( j != "id"){
+                       arr.push("<td contenteditable='true'>" + rs[i][j] + "</td>");
+                   }
+               }
+               arr.push("<td><a " +
+                   "href='http://localhost/delete?id=" + rs[i].id +"'>删除</a></td>")
+               arr.push("</tr>");
+               $("table tbody").append(arr);
+
+           }
+       })
+   })
+</script>
+</html>
